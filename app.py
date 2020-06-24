@@ -9,6 +9,7 @@ cors = CORS(app)
 
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
+	print("*******************")
 	f = request.files['file']
 	data_train = arff.loadarff(f)
 	return "Success"
