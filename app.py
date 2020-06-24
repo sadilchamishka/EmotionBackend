@@ -11,7 +11,7 @@ cors = CORS(app)
 def predictEmotion():
 	f = request.files['file']
 	data_train = arff.loadarff(f)
-    return "Success"
+	return "Success"
 
 if __name__ == "__main__":
     app.run()
