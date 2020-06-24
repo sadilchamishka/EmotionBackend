@@ -3,3 +3,4 @@ gunicorn==20.0.4
 Jinja2==2.11.2
 pandas
 Flask-Cors
+scipy
