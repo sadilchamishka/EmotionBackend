@@ -228,7 +228,7 @@ class BiModel(nn.Module):
             xf = torch.flip(x[:c], [0])
             xfs.append(xf)
 
-        return xfs
+        return pad_sequence(xfs)
 
 
     def forward(self, U, qmask, umask,att2=True):
@@ -245,8 +245,9 @@ class BiModel(nn.Module):
         emotions_b, alpha_b = self.dialog_rnn_r(rev_U, rev_qmask)
         emotions_b = self._reverse_seq(emotions_b, umask)
         emotions_b = self.dropout_rec(emotions_b)
+		print(emotions_f.size(),'****',emotions_b.size())
         emotions = torch.cat([emotions_f,emotions_b],dim=-1)
-        print(emotions_f.size(),'****',emotions_b.size())
+        print("******")
         if att2:
             att_emotions = []
             alpha = []
