@@ -29,7 +29,8 @@ cors = CORS(app)
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
 	f = request.files['file']
-	print (request.data['speakers'])
+	content = request.args
+	print (content['speakers']) 
 	f.save('data.csv')
 	df_test = pd.read_csv('data.csv')
 	acouf = torch.FloatTensor([[i for i in df_test.values]])
