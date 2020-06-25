@@ -119,8 +119,8 @@ class DialogueRNNCell(nn.Module):
         """
         qm_idx = torch.argmax(qmask, 1)
         q0_sel = self._select_parties(q0, qm_idx)
-        print(U.size(),'***',q0_sel.size())
-        g_ = self.g_cell(torch.cat([U,q0_sel]),
+
+        g_ = self.g_cell(torch.cat([U,q0_sel], dim=1),
                 torch.zeros(U.size()[0],self.D_g).type(U.type()) if g_hist.size()[0]==0 else
                 g_hist[-1])
         g_ = self.dropout(g_)

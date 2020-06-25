@@ -34,7 +34,7 @@ def predictEmotion():
 	f.save('data.arff')
 	data_train = arff.loadarff('data.arff')
 	df_train = pd.DataFrame(data_train[0])
-	acouf = torch.FloatTensor([df_train.values[0],df_train.values[1]])
+	acouf = torch.FloatTensor([[df_train.values[0],df_train.values[1]]])
 	qmask = torch.FloatTensor([[[1,0],[0,1]]])
 	umask = torch.FloatTensor([[1]*2])
 	
