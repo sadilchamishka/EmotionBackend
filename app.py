@@ -31,15 +31,13 @@ def predictEmotion():
 	f = request.files['file']
 	f.save('data.csv')
 	df_test = pd.read_csv('data.csv')
-	acouf = torch.FloatTensor([[df_test.values[0],df_test.values[1]]])
+	acouf = torch.FloatTensor([[i for i in df_test.values]])
 	qmask = torch.FloatTensor([[[1,0],[0,1]]])
 	umask = torch.FloatTensor([[1]]*2)
 	
 	log_prob, alpha, alpha_f, alpha_b = model(acouf, qmask,umask)
 	lp_ = log_prob.transpose(0,1).contiguous().view(-1,log_prob.size()[2])
 	pred_ = torch.argmax(lp_,1)
-	print("-----------------")
-	print(pred_)
 	return str(pred_)
 
 if __name__ == "__main__":
