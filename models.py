@@ -227,7 +227,7 @@ class BiModel(nn.Module):
             xf = torch.flip(x[:c], [0])
             xfs.append(xf)
 
-        return pad_sequence(xfs)
+        return xfs
 
 
     def forward(self, U, qmask, umask,att2=True):
@@ -238,7 +238,6 @@ class BiModel(nn.Module):
 
         emotions_f, alpha_f = self.dialog_rnn_f(U, qmask) # seq_len, batch, D_e
         emotions_f = self.dropout_rec(emotions_f)
-		print(emotions_f.size())
         rev_U = self._reverse_seq(U, umask)
         rev_qmask = self._reverse_seq(qmask, umask)
         
