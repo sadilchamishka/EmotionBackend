@@ -178,6 +178,7 @@ if __name__ == "__main__":
 			return g_,q_,e_,alpha
 
 	class DialogueRNN(nn.Module):
+	
 		def __init__(self, D_m, D_g, D_p, D_e, listener_state=False,
 								context_attention='simple', D_a=100, dropout=0.5):
 			super(DialogueRNN, self).__init__()
@@ -281,5 +282,5 @@ if __name__ == "__main__":
 			hidden = self.dropout(hidden)
 			log_prob = F.log_softmax(self.smax_fc(hidden), 2) # seq_len, batch, n_classes
 			return log_prob, alpha, alpha_f, alpha_b
-		
-    app.run()
+	
+	app.run()
