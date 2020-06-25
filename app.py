@@ -4,7 +4,25 @@ import pandas as pd
 import pickle
 from scipy.io import arff
 from models import SimpleAttention,MatchingAttention,DialogueRNNCell,DialogueRNN,BiModel
+import torch
 
+D_m = 2000
+D_g = 150
+D_p = 150
+D_e = 100
+D_h = 100
+D_a = 100
+n_classes = 6
+
+model = BiModel(D_m, D_g, D_p, D_e, D_h,
+                  n_classes=n_classes,
+                  listener_state=False,
+                  context_attention='general',
+                  dropout_rec=0.1,
+                  dropout=0.1) 
+
+model.load_state_dict(torch.load('rnn_model.pt'))
+model.eval()
 		
 # Create Flask app and enable CORS
 app = Flask(__name__)
