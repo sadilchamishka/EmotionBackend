@@ -23,4 +23,4 @@ def predictEmotion():
 
 if __name__ == "__main__":
 	BiModel.__module__ = "BiModel"
-    app.run()
+	app.run()
