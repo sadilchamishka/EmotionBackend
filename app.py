@@ -1,7 +1,6 @@
 from flask import Flask,send_file,request,jsonify
 from flask_cors import CORS
 import pandas as pd
-from scipy.io import arff
 from models import SimpleAttention,MatchingAttention,DialogueRNNCell,DialogueRNN,BiModel
 import torch
 
@@ -29,12 +28,10 @@ cors = CORS(app)
 
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
-	print("*******************")
 	f = request.files['file']
-	f.save('data.arff')
-	data_train = arff.loadarff('data.arff')
-	df_train = pd.DataFrame(data_train[0])
-	acouf = torch.FloatTensor([[df_train.values[0],df_train.values[1]]])
+	f.save('data.csv')
+	df_test = pd.read_csv('data.csv')
+	acouf = torch.FloatTensor([[df_test.values[0],df_test.values[1]]])
 	qmask = torch.FloatTensor([[[1,0],[0,1]]])
 	umask = torch.FloatTensor([[1]]*2)
 	
