@@ -245,8 +245,8 @@ class BiModel(nn.Module):
         emotions_b = self._reverse_seq(emotions_b, umask)
         emotions_b = self.dropout_rec(emotions_b)
 		print(emotions_f.size(),'****',emotions_b.size())
-        emotions = torch.cat([emotions_f,emotions_b],dim=-1)
-        if att2:
+		emotions = torch.cat([emotions_f,emotions_b],dim=-1)
+		if att2:
             att_emotions = []
             alpha = []
             for t in emotions:
