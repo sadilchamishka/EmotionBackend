@@ -4,4 +4,4 @@ Jinja2==2.11.2
 pandas
 Flask-Cors
 scipy
-torch
+torch torchvision
