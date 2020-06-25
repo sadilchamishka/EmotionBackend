@@ -191,6 +191,7 @@ class DialogueRNN(nn.Module):
 
         return e,alpha # seq_len, batch, D_e
 
+		
 class BiModel(nn.Module):
 
     def __init__(self, D_m, D_g, D_p, D_e, D_h,
@@ -243,9 +244,10 @@ class BiModel(nn.Module):
         
         emotions_b, alpha_b = self.dialog_rnn_r(rev_U, rev_qmask)
         emotions_b = self._reverse_seq(emotions_b, umask)
-		emotions_b = self.dropout_rec(emotions_b)
-		emotions = torch.cat([emotions_f,emotions_b],dim=-1)
-		if att2:
+        emotions_b = self.dropout_rec(emotions_b)
+        emotions = torch.cat([emotions_f,emotions_b],dim=-1)
+        print(emotions_f.size(),'****',emotions_b.size())
+        if att2:
             att_emotions = []
             alpha = []
             for t in emotions:
