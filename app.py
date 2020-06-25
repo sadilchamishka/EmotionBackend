@@ -271,11 +271,12 @@ class BiModel(nn.Module):
 app = Flask(__name__)
 cors = CORS(app)
 
+loaded_model = pickle.load(open('rnn_model.pkl', 'rb'))
+
 
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
 	print("*******************")
-	loaded_model = pickle.load(open('rnn_model.pkl', 'rb'))
 	f = request.files['file']
 	f.save('data.arff')
 	data_train = arff.loadarff('data.arff')
@@ -283,4 +284,42 @@ def predictEmotion():
 	return str(df_train.values[0][10])
 
 if __name__ == "__main__":
+	class BiModel(nn.Module):
+
+		def __init__(self, D_m, D_g, D_p, D_e, D_h,
+					 n_classes=7, listener_state=False, context_attention='simple', D_a=100, dropout_rec=0.5,
+					 dropout=0.5):
+			super(BiModel, self).__init__()
+
+			self.D_m       = D_m
+			self.D_g       = D_g
+			self.D_p       = D_p
+			self.D_e       = D_e
+			self.D_h       = D_h
+			self.n_classes = n_classes
+			self.dropout   = nn.Dropout(dropout)
+			self.dropout_rec = nn.Dropout(dropout+0.15)
+			self.dialog_rnn_f = DialogueRNN(D_m, D_g, D_p, D_e,listener_state,
+										context_attention, D_a, dropout_rec)
+			self.dialog_rnn_r = DialogueRNN(D_m, D_g, D_p, D_e,listener_state,
+										context_attention, D_a, dropout_rec)
+			self.linear     = nn.Linear(2*D_e, 2*D_h)
+			self.smax_fc    = nn.Linear(2*D_h, n_classes)
+			self.matchatt = MatchingAttention(2*D_e,2*D_e,att_type='general2')
+
+		def _reverse_seq(self, X, mask):
+			"""
+			X -> seq_len, batch, dim
+			mask -> batch, seq_len
+			"""
+			X_ = X.transpose(0,1)
+			mask_sum = torch.sum(mask, 1).int()
+
+        xfs = []
+        for x, c in zip(X_, mask_sum):
+            xf = torch.flip(x[:c], [0])
+            xfs.append(xf)
+
+        return pad_sequence(xfs)
+		
     app.run()
