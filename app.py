@@ -34,7 +34,16 @@ def predictEmotion():
 	f.save('data.arff')
 	data_train = arff.loadarff('data.arff')
 	df_train = pd.DataFrame(data_train[0])
-	return str(df_train.values[0][10])
+	acouf = torch.FloatTensor(df_train.values[0])
+	qmask = torch.FloatTensor([[1,0]])
+	umask = torch.FloatTensor([1]*1)
+	
+	log_prob, alpha, alpha_f, alpha_b = model(acouf, qmask,umask)
+	lp_ = log_prob.transpose(0,1).contiguous().view(-1,log_prob.size()[2])
+	pred_ = torch.argmax(lp_,1)
+	print("-----------------")
+	print(pred_)
+	return str(pred_)
 
 if __name__ == "__main__":
 	BiModel.__module__ = "BiModel"
