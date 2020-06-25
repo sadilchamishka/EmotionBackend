@@ -4,7 +4,7 @@ import pandas as pd
 import pickle
 from scipy.io import arff
 import torch
-import models
+from models import BiModel,DialogueRNN,DialogueRNNCell,MatchingAttention,SimpleAttention
 
 # Create Flask app and enable CORS
 app = Flask(__name__)
