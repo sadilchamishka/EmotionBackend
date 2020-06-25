@@ -271,11 +271,11 @@ class BiModel(nn.Module):
 app = Flask(__name__)
 cors = CORS(app)
 
-loaded_model = pickle.load(open('rnn_model.pkl', 'rb'))
 
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
 	print("*******************")
+	loaded_model = pickle.load(open('rnn_model.pkl', 'rb'))
 	f = request.files['file']
 	f.save('data.arff')
 	data_train = arff.loadarff('data.arff')
