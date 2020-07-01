@@ -39,7 +39,7 @@ def predictEmotion():
 	log_prob, alpha, alpha_f, alpha_b = model(acouf, qmask,umask)
 	lp_ = log_prob.transpose(0,1).contiguous().view(-1,log_prob.size()[2])
 	pred_ = torch.argmax(lp_,1)
-	return str(pred_)
+	return jsonify(pred_.tolist())
 
 if __name__ == "__main__":
 	BiModel.__module__ = "BiModel"
