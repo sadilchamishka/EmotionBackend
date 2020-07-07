@@ -3,6 +3,7 @@ from flask_cors import CORS
 import pandas as pd
 from models import SimpleAttention,MatchingAttention,DialogueRNNCell,DialogueRNN,BiModel
 import torch
+import random
 
 D_m = 2000
 D_g = 150
@@ -29,9 +30,10 @@ cors = CORS(app)
 @app.route("/",methods = ['POST'])
 def home():
 	print("++++++++++++++++++++++")
-	with open('myfile.wav', mode='bx') as f:
+	name = str(random.randint(1,1000))
+	with open(name+'myfile.wav', mode='bx') as f:
 		f.write(request.data)
-	return app.send_static_file('myfile.wav')
+	return app.send_static_file(name+'myfile.wav')
 
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
