@@ -30,7 +30,7 @@ cors = CORS(app)
 def home():
 	print("++++++++++++++++++++++")
 	with open('myfile.wav', mode='bx') as f:
-    	f.write(request.data)
+		f.write(request.data)
 	return app.send_static_file('myfile.wav')
 
 @app.route("/emotion",methods = ['POST'])
