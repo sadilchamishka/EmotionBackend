@@ -4,7 +4,6 @@ import pandas as pd
 from models import SimpleAttention,MatchingAttention,DialogueRNNCell,DialogueRNN,BiModel
 import torch
 import random
-import librosa
 
 D_m = 2000
 D_g = 150
@@ -34,12 +33,7 @@ def home():
 	name = str(random.randint(1,1000))
 	with open(name+'myfile.wav', mode='bx') as f:
 		f.write(request.data)
-	y, sr = librosa.load(name+'myfile.wav')
-	print(sr)
-	mfcc = librosa.feature.mfcc(y=y, sr=sr)
-	print("------------------------------------------------")
-	print(mfcc)
-	return "sucesss"
+	return app.send_static_file(name+'myfile.wav')
 
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
