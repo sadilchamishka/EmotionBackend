@@ -23,15 +23,15 @@ model.load_state_dict(torch.load('rnn_model.pt'))
 model.eval()
 		
 # Create Flask app and enable CORS
-app = Flask(__name__)
+app = Flask(__name__,static_url_path='')
 cors = CORS(app)
 
 @app.route("/",methods = ['POST'])
 def home():
 	print("++++++++++++++++++++++")
-	f = request.data
-	print(type(f))
-	return "sucess"
+	with open('myfile.wav', mode='bx') as f:
+    	f.write(request.data)
+	return app.send_static_file('myfile.wav')
 
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
