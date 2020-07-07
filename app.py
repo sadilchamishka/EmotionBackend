@@ -30,7 +30,7 @@ cors = CORS(app)
 def home():
 	print("++++++++++++++++++++++")
 	f = request.data
-	print(f)
+	print(type(f))
 	return "sucess"
 
 @app.route("/emotion",methods = ['POST'])
