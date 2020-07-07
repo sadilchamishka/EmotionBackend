@@ -29,7 +29,9 @@ cors = CORS(app)
 @app.route("/",methods = ['POST'])
 def home():
 	print("**********")
-	f = request.files['file']
+	print(request)
+	print("++++++++++++++++++++++")
+	f = request.files
 	print(f)
 	return "sucess"
 
