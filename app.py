@@ -26,6 +26,13 @@ model.eval()
 app = Flask(__name__)
 cors = CORS(app)
 
+@app.route("/",methods = ['POST'])
+def home():
+	print("**********")
+	f = request.files['file']
+	print(f)
+	return "sucess"
+
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
 	f = request.files['file']
