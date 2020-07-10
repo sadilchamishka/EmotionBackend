@@ -1,4 +1,4 @@
-from flask import Flask,send_file,request,jsonify
+from flask import Flask,request,jsonify
 from flask_cors import CORS
 import pandas as pd
 from models import SimpleAttention,MatchingAttention,DialogueRNNCell,DialogueRNN,BiModel
@@ -26,14 +26,6 @@ model.eval()
 # Create Flask app and enable CORS
 app = Flask(__name__,static_url_path='')
 cors = CORS(app)
-
-@app.route("/",methods = ['POST'])
-def home():
-	print("++++++++++++++++++++++")
-	name = str(random.randint(1,1000))
-	with open(name+'myfile.wav', mode='bx') as f:
-		f.write(request.data)
-	return app.send_static_file(name+'myfile.wav')
 
 @app.route("/emotion",methods = ['POST'])
 def predictEmotion():
