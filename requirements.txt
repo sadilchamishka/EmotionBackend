@@ -1,6 +1,6 @@
 Flask==1.1.2
 gunicorn==20.0.4
-Jinja2==2.11.2
+Jinja2==2.11.3
 pandas
 Flask-Cors
 --find-links https://download.pytorch.org/whl/torch_stable.html
